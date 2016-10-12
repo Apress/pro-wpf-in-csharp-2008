@@ -1,0 +1,16 @@
+﻿<Window x:Class="Content.GroupBoxTest"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="GroupBoxTest" Height="217" Width="190"
+    >
+  <GroupBox Header="A GroupBox Test" Padding="5"
+            Margin="5" VerticalAlignment="Top">
+    <StackPanel>
+      <RadioButton Margin="3">One</RadioButton>
+      <RadioButton Margin="3">Two</RadioButton>
+      <RadioButton Margin="3">Three</RadioButton>
+      <Button Margin="3">Save</Button>
+    </StackPanel>
+  </GroupBox>
+  
+</Window>

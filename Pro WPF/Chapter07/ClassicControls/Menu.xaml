@@ -1,0 +1,27 @@
+﻿<Window x:Class="ClassicControls.Menu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Menu" Height="347.4" Width="245.6"
+    >
+    <Grid>
+      <StackPanel Margin="5" Button.Click="ButtonClick">        
+      
+        <Button>Transparency</Button>
+        <Button>EmbeddedFont</Button>
+        <Button>LabelTest</Button>
+        <Button>RadioButtonGroups</Button>
+        <Button>Tooltips</Button>
+        <Button>PopupTest</Button>
+        <Button>TextBoxTest</Button>
+        <Button>ImageList</Button>
+        <Button>CheckBoxList</Button>
+        <Button>ComboBoxTest</Button>
+        <Button>SliderTest</Button>
+        <Button>SlidersCompared</Button>
+        <Button>IndeterminateProgressBar</Button>
+        
+
+      </StackPanel>
+        
+    </Grid>
+</Window>

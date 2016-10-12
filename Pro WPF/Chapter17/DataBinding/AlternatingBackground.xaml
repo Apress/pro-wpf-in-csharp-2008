@@ -1,0 +1,29 @@
+﻿<Window x:Class="DataBinding.AlternatingBackground"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="AlternatingBackground" Height="300" Width="300"
+         xmlns:local="clr-namespace:DataBinding"
+    >
+  <Window.Resources>
+    
+    <Style x:Key="AlternateStyle">
+      <Setter Property="ListBoxItem.Background" Value="AliceBlue" ></Setter>
+    </Style>
+  </Window.Resources>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"></RowDefinition>
+        <RowDefinition></RowDefinition>
+      </Grid.RowDefinitions>
+      <Button Margin="7,7,7,0" Padding="2" Click="cmdGetProducts_Click">Get Products</Button>
+      <ListBox Grid.Row="1" Margin="7,3,7,10" Name="lstProducts" DisplayMemberPath="ModelName">
+        <ListBox.ItemContainerStyleSelector>
+          <local:AlternatingRowStyleSelector
+      
+            AlternateStyle="{StaticResource AlternateStyle}"             
+            ></local:AlternatingRowStyleSelector>  
+        </ListBox.ItemContainerStyleSelector>
+        
+      </ListBox> 
+    </Grid>
+</Window>

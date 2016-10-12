@@ -1,0 +1,30 @@
+﻿<Window x:Class="Animation.AnimationInTemplate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="AnimationInTemplate" Height="239" Width="248"
+    >
+  <Window.Resources>
+    <ResourceDictionary>
+    <ResourceDictionary.MergedDictionaries>      
+      <ResourceDictionary Source="ListBox.xaml"></ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Window.Resources>
+    
+      <ListBox Margin="5" >
+        <ListBoxItem>One</ListBoxItem>
+        <ListBoxItem>Two</ListBoxItem>
+        <ListBoxItem>Three</ListBoxItem>
+        <ListBoxItem>Four</ListBoxItem>
+        <ListBoxItem>Five</ListBoxItem>
+        <ListBoxItem>Six</ListBoxItem>
+        <ListBoxItem>Seven</ListBoxItem>
+        <ListBoxItem>Eight</ListBoxItem>
+        <ListBoxItem>Nine</ListBoxItem>
+        <ListBoxItem>Ten</ListBoxItem>
+        <ListBoxItem>Eleven</ListBoxItem>
+        <ListBoxItem>Twelve</ListBoxItem>
+      </ListBox>
+      
+    
+</Window>

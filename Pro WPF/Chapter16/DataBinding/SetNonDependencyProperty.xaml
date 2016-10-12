@@ -1,0 +1,27 @@
+﻿<Window x:Class="DataBinding.SetNonDependencyProperty"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="SetNonDependencyProperty" Height="300" Width="300"
+    >
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"></RowDefinition>
+        <RowDefinition Height="Auto"></RowDefinition>
+        <RowDefinition Height="*"></RowDefinition>
+      </Grid.RowDefinitions>
+
+      <TextBlock Margin="5">Second Paragraph Content: </TextBlock>
+      <TextBox Margin="5" Grid.Row="1" MinLines="2" TextWrapping="Wrap"
+        Text="{Binding ElementName=runParagraphTwo, Path=Text, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+        ></TextBox>
+
+      <FlowDocumentScrollViewer Grid.Row="2">
+        <FlowDocument>
+          <Paragraph>This is a paragraph one.</Paragraph>
+          <Paragraph>
+            <Run Name="runParagraphTwo"></Run>
+          </Paragraph>
+        </FlowDocument>
+      </FlowDocumentScrollViewer>
+    </Grid>
+</Window>

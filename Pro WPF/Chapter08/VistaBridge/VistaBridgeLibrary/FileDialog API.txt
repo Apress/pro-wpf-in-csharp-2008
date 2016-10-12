@@ -1,0 +1,285 @@
+Various File Dialog Header definitions (from shobjidl.idl in the SDK)
+---------------------------------------------------------------------
+
+typedef
+[
+    helpstring("Constants for the type of usage of an open file")
+]
+enum tagFILE_USAGE_TYPE
+{
+    FUT_PLAYING,
+    FUT_EDITING,
+    FUT_GENERIC
+} FILE_USAGE_TYPE;
+
+cpp_quote("#define OF_CAP_CANSWITCHTO     0x0001")
+cpp_quote("#define OF_CAP_CANCLOSE        0x0002")
+
+[
+    uuid(64a1cbf0-3a1a-4461-9158-376969693950),
+    pointer_default(unique)
+]
+interface IFileIsInUse : IUnknown
+{
+    HRESULT GetAppName([out, string] LPWSTR *ppszName);
+    HRESULT GetUsage([out] FILE_USAGE_TYPE *pfut);
+    HRESULT GetCapabilities([out] DWORD *pdwCapFlags);
+    HRESULT GetSwitchToHWND([out] HWND *phwnd);
+    HRESULT CloseFile();
+}
+
+interface IFileDialog;
+
+typedef [v1_enum] enum tagFDE_OVERWRITE_RESPONSE
+{
+    FDEOR_DEFAULT            = 0x00000000, // The application has not handled the event, and the dialog should put up UI asking the user
+                                           // whether or not the file should be overwritten and be returned from the dialog
+    FDEOR_ACCEPT             = 0x00000001, // The application has decided that the file should be returned from the dialog
+    FDEOR_REFUSE             = 0x00000002, // The application has decided that the file should not be returned from the dialog
+} FDE_OVERWRITE_RESPONSE;
+
+typedef [v1_enum] enum tagFDE_SHAREVIOLATION_RESPONSE
+{
+    FDESVR_DEFAULT           = 0x00000000, // The application has not handled the event.  The dialog will put up UI indicating the file
+                                           // is in use, and a different file must be chosen.
+    FDESVR_ACCEPT            = 0x00000001, // The application has decided that the file should be returned from the dialog
+    FDESVR_REFUSE            = 0x00000002, // The application has decided that the file should not be returned from the dialog
+} FDE_SHAREVIOLATION_RESPONSE;
+
+typedef [v1_enum] enum tagFDAP
+{
+    FDAP_BOTTOM              = 0x00000000, // The place is added to the bottom of the default list.
+    FDAP_TOP                 = 0x00000001, // The place is added to the top of the default list.
+} FDAP;
+
+
+//
+// Implemented by a client of the common file dialog browser,
+//  for notification of events within the dialog.
+//
+[
+    uuid(973510db-7d7f-452b-8975-74a85828d354),
+    object,
+    pointer_default(unique)
+]
+interface IFileDialogEvents : IUnknown
+{
+    HRESULT OnFileOk([in] IFileDialog *pfd);
+    HRESULT OnFolderChanging([in] IFileDialog *pfd, [in] IShellItem *psiFolder);
+    HRESULT OnFolderChange([in] IFileDialog *pfd);
+    HRESULT OnSelectionChange([in] IFileDialog *pfd);
+    // Note: FOS_SHAREAWARE must be set in IFileDialog::SetOptions in order for this method to be called.
+    HRESULT OnShareViolation([in] IFileDialog *pfd, [in] IShellItem *psi, [out] FDE_SHAREVIOLATION_RESPONSE *pResponse);
+    HRESULT OnTypeChange([in] IFileDialog *pfd);
+    // Note: FOS_OVERWRITEPROMPT must be set in IFileDialog::SetOptions in order for this method to be called.
+    HRESULT OnOverwrite([in] IFileDialog *pfd, [in] IShellItem *psi, [out] FDE_OVERWRITE_RESPONSE *pResponse);
+}
+
+// Event notifications from the controls, handled by an interface
+// optionally implemented by the same IFileDialogEvents object supplied by the app.
+[
+    uuid(36116642-D713-4b97-9B83-7484A9D00433),
+    object,
+    pointer_default(unique)
+]
+interface IFileDialogControlEvents : IUnknown
+{
+    // An item in a combobox, toolsmenu, or radiobutton group was selected.
+    // (this notification is *not* sent when an item is chosen from the open dropdown,
+    //  as the action here is always the same: close the dialog as if the user clicked open.
+    //  At that point, the app will then be able to call GetSelectedItem() for the open dropdown, to
+    //  obtain the item that was chosen).
+    HRESULT OnItemSelected([in] IFileDialogCustomize *pfdc, [in] DWORD dwIDCtl, [in] DWORD dwIDItem);
+
+    // A pushbutton was clicked.
+    HRESULT OnButtonClicked([in] IFileDialogCustomize *pfdc, [in] DWORD dwIDCtl);
+
+    // A checkbutton was toggled.
+    HRESULT OnCheckButtonToggled([in] IFileDialogCustomize *pfdc, [in] DWORD dwIDCtl, [in] BOOL bChecked);
+
+    // A combobox, toolsmenu or open dropdown is about to be "dropped down".  At this point,
+    // the application may want to update the contents based on the current state of the dialog.
+    HRESULT OnControlActivating([in] IFileDialogCustomize *pfdc, [in] DWORD dwIDCtl);
+}
+
+interface IShellItemFilter;
+
+//
+// Implemented by the common file dialog browser, used by clients to
+//  initialize, show, and get results from the dialog.
+//
+//
+// Implemented by the common file dialog browser, used by clients to
+//  initialize, show, and get results from the dialog.
+//
+[
+    uuid(42f85136-db7e-439c-85f1-e4075d135fc8),
+    object,
+    pointer_default(unique)
+]
+interface IFileDialog : IModalWindow
+{
+    enum tagFILEOPENDIALOGOPTIONS
+    {
+        FOS_OVERWRITEPROMPT          = 0x00000002,
+        FOS_STRICTFILETYPES          = 0x00000004,
+        FOS_NOCHANGEDIR              = 0x00000008,
+        FOS_PICKFOLDERS              = 0x00000020,
+        FOS_FORCEFILESYSTEM          = 0x00000040, // Ensure that items returned are filesystem items.
+        FOS_ALLNONSTORAGEITEMS       = 0x00000080, // Allow choosing items that have no storage.
+        FOS_NOVALIDATE               = 0x00000100,
+        FOS_ALLOWMULTISELECT         = 0x00000200,
+        FOS_PATHMUSTEXIST            = 0x00000800,
+        FOS_FILEMUSTEXIST            = 0x00001000,
+        FOS_CREATEPROMPT             = 0x00002000,
+        FOS_SHAREAWARE               = 0x00004000,
+        FOS_NOREADONLYRETURN         = 0x00008000,
+        FOS_NOTESTFILECREATE         = 0x00010000,
+        FOS_HIDEMRUPLACES            = 0x00020000,
+        FOS_HIDEPINNEDPLACES         = 0x00040000,
+        FOS_NODEREFERENCELINKS       = 0x00100000,
+        FOS_DONTADDTORECENT          = 0x02000000,
+        FOS_FORCESHOWHIDDEN          = 0x10000000,
+        FOS_DEFAULTNOMINIMODE        = 0x20000000
+    };
+
+    HRESULT SetFileTypes([in] UINT cFileTypes, [in, size_is(cFileTypes)] const COMDLG_FILTERSPEC *rgFilterSpec);
+    HRESULT SetFileTypeIndex([in] UINT iFileType);
+    HRESULT GetFileTypeIndex([out] UINT *piFileType);
+    HRESULT Advise([in] IFileDialogEvents *pfde, [out] DWORD *pdwCookie);
+    HRESULT Unadvise([in] DWORD dwCookie);
+    HRESULT SetOptions([in] DWORD fos);
+    HRESULT GetOptions([out] DWORD *pfos);
+    HRESULT SetDefaultFolder([in] IShellItem *psi);
+    HRESULT SetFolder([in] IShellItem *psi);
+    HRESULT GetFolder([out] IShellItem **ppsi);
+    HRESULT GetCurrentSelection([out] IShellItem **ppsi);
+    HRESULT SetFileName([in, string] LPCWSTR pszName);
+    HRESULT GetFileName([out, string] LPWSTR *pszName);
+    HRESULT SetTitle([in, string] LPCWSTR pszTitle);
+    HRESULT SetOkButtonLabel([in, string] LPCWSTR pszText);
+    HRESULT SetFileNameLabel([in, string] LPCWSTR pszLabel);
+    HRESULT GetResult([out] IShellItem **ppsi);
+    HRESULT AddPlace([in] IShellItem *psi, FDAP fdap);
+    HRESULT SetDefaultExtension([in] LPCWSTR pszDefaultExtension);
+    HRESULT Close(HRESULT hr);
+    HRESULT SetClientGuid([in] REFGUID guid);
+    HRESULT ClearClientData();
+    HRESULT SetFilter(IShellItemFilter *pFilter);
+}
+
+//
+// Additional methods specific to the file save dialog
+//
+[
+    uuid(84bccd23-5fde-4cdb-aea4-af64b83d78ab),
+    object,
+    pointer_default(unique)
+]
+interface IFileSaveDialog : IFileDialog
+{
+    HRESULT SetSaveAsItem([in] IShellItem *psi);
+    HRESULT SetProperties([in] IPropertyStore *pStore);
+    HRESULT SetCollectedProperties([in] IPropertyDescriptionList *pList, [in] BOOL fAppendDefault);
+    HRESULT GetProperties([out] IPropertyStore **ppStore);
+    HRESULT ApplyProperties([in] IShellItem *psi, [in] IPropertyStore *pStore, [in, unique] HWND hwnd, [in, unique] IFileOperationProgressSink *pSink);
+}
+
+//
+// Additional methods specific to the file open dialog
+// (adding multiselect capability)
+//
+[
+    uuid(d57c7288-d4ad-4768-be02-9d969532d960),
+    object,
+    pointer_default(unique)
+]
+interface IFileOpenDialog : IFileDialog
+{
+    HRESULT GetResults([out] IShellItemArray **ppenum);
+    HRESULT GetSelectedItems([out] IShellItemArray **ppsai);
+}
+
+typedef [v1_enum] enum tagCDCONTROLSTATE
+{
+    CDCS_INACTIVE       = 0x00000000,
+    CDCS_ENABLED        = 0x00000001,
+    CDCS_VISIBLE        = 0x00000002,
+} CDCONTROLSTATE;
+typedef DWORD CDCONTROLSTATEF;
+
+// Some facts:
+// - Controls are added before the dialog is shown.  Their relative layout is implied by the order in which
+//    they are added. Controls may be added below or above the standard set of controls.
+//    Controls can not be removed or added afterwards, but they may be hidden or disabled at any time.
+//    Their labels may be changed at any time.
+// - Some controls are container controls: combobox, toolsmenu, opendropdown, radiogroup.  These may have
+//   items added to them.
+// - Items with a container control are "immutable", except for their enabled/visible state.  They can be
+//    added and removed at will.  There is no ability to position items within a container - they appear in the
+//    order they were added.  IDs for items are scoped to their parent control.
+// - Container controls have the notion of a "selected item", with the exception of the toolsmenu.
+// - radiobuttongroups behave exactly like comboboxes.  The radio buttons within the group are treated exactly
+//    like items in a combobox, one of which can be the "selected item".
+[
+    uuid(8016b7b3-3d49-4504-a0aa-2a37494e606f),
+    object,
+    pointer_default(unique)
+]
+interface IFileDialogCustomize : IUnknown
+{
+    // Methods for adding or enabling controls. All of these can have their
+    // enabled/visible state set, however the default is for them to be enabled and visible,
+    // so this parameter has been left off these methods.
+    HRESULT EnableOpenDropDown([in] DWORD dwIDCtl);
+
+    HRESULT AddMenu([in] DWORD dwIDCtl, [in, string] LPCWSTR pszLabel);
+    HRESULT AddPushButton([in] DWORD dwIDCtl, [in, string] LPCWSTR pszLabel);
+    HRESULT AddComboBox([in] DWORD dwIDCtl);
+    HRESULT AddRadioButtonList([in] DWORD dwIDCtl);
+    HRESULT AddCheckButton([in] DWORD dwIDCtl, [in, string] LPCWSTR pszLabel, [in] BOOL bChecked);
+    HRESULT AddEditBox([in] DWORD dwIDCtl, [in, string] LPCWSTR pszText);
+    HRESULT AddSeparator([in] DWORD dwIDCtl);
+    HRESULT AddText([in] DWORD dwIDCtl, [in] LPCWSTR pszText);
+
+    // Getting/setting attributes on controls on the fly
+    HRESULT SetControlLabel([in] DWORD dwIDCtl, [in, string] LPCWSTR pszLabel);
+    HRESULT GetControlState([in] DWORD dwIDCtl, [out] CDCONTROLSTATEF *pdwState);
+    HRESULT SetControlState([in] DWORD dwIDCtl, [in] CDCONTROLSTATEF dwState);
+    HRESULT GetEditBoxText([in] DWORD dwIDCtl, [out, string] WCHAR **ppszText);
+    HRESULT SetEditBoxText([in] DWORD dwIDCtl, [in, string] LPCWSTR pszText);
+    HRESULT GetCheckButtonState([in] DWORD dwIDCtl, [out] BOOL *pbChecked);
+    HRESULT SetCheckButtonState([in] DWORD dwIDCtl, [in] BOOL bChecked);
+
+    // Method for adding items to "container controls" (radiogroup, combobox, opendropdown, toolsmenu)
+    HRESULT AddControlItem([in] DWORD dwIDCtl, [in] DWORD dwIDItem, [in] LPCWSTR pszLabel);
+
+    // Methods for removing items in the "container controls"
+    HRESULT RemoveControlItem([in] DWORD dwIDCtl, [in] DWORD dwIDItem);
+    HRESULT RemoveAllControlItems([in] DWORD dwIDCtl);
+
+    // Getting/setting attributes on control items on the fly
+    // Items are considered immutable once created, except for their state:
+    HRESULT GetControlItemState([in] DWORD dwIDCtl, [in] DWORD dwIDItem, [out] CDCONTROLSTATEF *pdwState);
+    HRESULT SetControlItemState([in] DWORD dwIDCtl, [in] DWORD dwIDItem, [in] CDCONTROLSTATEF dwState);
+
+    // Methods for some "container controls": OpenDropDown, combobox, radiobuttongroup.
+    // These methods don't apply to the tools menu.
+    // These methods can be called after the dialog has closed, to determine the users final choice.
+    // For comboboxes and radiobuttongroups, these methods may also be called while the
+    // dialog is showing (which makes no sense for the OpenDropDown).
+    HRESULT GetSelectedControlItem([in] DWORD dwIDCtl, [out] DWORD *pdwIDItem);
+    HRESULT SetSelectedControlItem([in] DWORD dwIDCtl, [in] DWORD dwIDItem); // Not valid for OpenDropDown
+
+    // Controls can be grouped by wrapping their adds in StartVisualGroup/EndVisualGroup
+    // Groups have control IDs, and can be disabled/hidden, just like other controls.
+    HRESULT StartVisualGroup([in] DWORD dwIDCtl, [in, string] LPCWSTR pszLabel);
+    HRESULT EndVisualGroup();
+
+    // One control may be marked as appearing prominently in the UI
+    HRESULT MakeProminent([in] DWORD dwIDCtl);
+}
+
+
+
+

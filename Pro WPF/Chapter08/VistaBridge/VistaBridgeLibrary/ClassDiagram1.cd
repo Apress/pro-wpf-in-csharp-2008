@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="Microsoft.SDK.Samples.VistaBridge.Library.DialogControl">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Library\DialogControl.cs</FileName>
+      <HashCode>AAACAAAAAAAAAIIAgBACAAQAAAAEAIAAAAAAAAAAAwA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Field Name="hostingDialog" Hidden="true" />
+      <Field Name="id" Hidden="true" />
+      <Field Name="name" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="Microsoft.SDK.Samples.VistaBridge.Library.TaskDialogBar">
+    <Position X="2" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Library\TaskDialogBar.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.SDK.Samples.VistaBridge.Library.TaskDialogButtonBase">
+    <Position X="7.5" Y="5.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Library\TaskDialogButtonBase.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAIAAAACAIAAAAAAAAAAIIAAACAAAIgA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Public" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="Microsoft.SDK.Samples.VistaBridge.Library.TaskDialogCommandLink">
+    <Position X="5.75" Y="9.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Library\TaskDialogCommandLink.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAIAAAACAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.SDK.Samples.VistaBridge.Library.TaskDialogControl">
+    <Position X="4.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Library\TaskDialogControl.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.SDK.Samples.VistaBridge.Library.TaskDialogMarquee">
+    <Position X="3" Y="8.25" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Library\TaskDialogMarquee.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.SDK.Samples.VistaBridge.Library.TaskDialogProgressBar">
+    <Position X="0.5" Y="8.25" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Library\TaskDialogProgressBar.cs</FileName>
+      <HashCode>gAAAAICAAAAAgBAAAAAAAAAAAAAAACAAAAAgAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.SDK.Samples.VistaBridge.Library.TaskDialogRadioButton">
+    <Position X="8.75" Y="9.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Library\TaskDialogRadioButton.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+</ClassDiagram>

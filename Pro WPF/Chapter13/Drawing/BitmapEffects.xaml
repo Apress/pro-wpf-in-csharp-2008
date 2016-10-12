@@ -1,0 +1,115 @@
+﻿<Window x:Class="Drawing.BitmapEffects"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="BitmapEffects" Height="436" Width="460"
+        xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+    >
+  <ScrollViewer>
+  <StackPanel Margin="3">
+    <StackPanel.Resources>
+      <Style TargetType="{x:Type Button}">
+        <Setter Property="Padding" Value="5"></Setter>
+        <Setter Property="Margin" Value="3"></Setter>
+      </Style>
+    </StackPanel.Resources>
+    <Button>A Regular Button</Button>
+      <Button>        
+        <Button.Content>A Blurred Button</Button.Content>
+        <Button.BitmapEffect>
+          <BlurBitmapEffect Radius="1"></BlurBitmapEffect>
+        </Button.BitmapEffect>
+      </Button>
+      <Button>
+        <Button.Content>A Really Blurred Button</Button.Content>
+        <Button.BitmapEffect>
+          <BlurBitmapEffect Radius="5"></BlurBitmapEffect>
+        </Button.BitmapEffect>
+      </Button>
+
+      <Button>
+        <Button.Content>A Beveled Button</Button.Content>
+        <Button.BitmapEffect>
+          <BevelBitmapEffect></BevelBitmapEffect>
+        </Button.BitmapEffect>
+      </Button>
+      <TextBlock FontSize="80" FontWeight="Bold" Foreground="Gray">
+        <TextBlock.Text>Beveled Text</TextBlock.Text>
+          <TextBlock.BitmapEffect>
+            <BevelBitmapEffect></BevelBitmapEffect>
+          </TextBlock.BitmapEffect>
+        </TextBlock> 
+      <TextBlock FontSize="40" FontWeight="Bold" Foreground="Gray">
+        <TextBlock.Text>Embossed Text</TextBlock.Text>
+        <TextBlock.BitmapEffect>
+          <EmbossBitmapEffect></EmbossBitmapEffect>
+        </TextBlock.BitmapEffect>
+      </TextBlock> 
+      <WrapPanel>
+      <Image Margin="3" Source="cube.jpg" Width="150">        
+      </Image>
+      <Image Margin="3" Source="cube.jpg" Width="150">
+        <Image.BitmapEffect>
+          <EmbossBitmapEffect Relief="0.9"></EmbossBitmapEffect>
+        </Image.BitmapEffect>
+      </Image>
+      <Image Margin="3" Source="cube.jpg" Width="150">
+        <Image.BitmapEffect>
+          <EmbossBitmapEffect Relief="0.5"></EmbossBitmapEffect>
+        </Image.BitmapEffect>
+      </Image>      
+      </WrapPanel>
+
+
+    <Button>
+      <Button.Content>A Shadowed Button</Button.Content>
+      <Button.BitmapEffect>
+        <DropShadowBitmapEffect></DropShadowBitmapEffect>
+      </Button.BitmapEffect>
+    </Button>
+    <TextBlock Margin="3" FontSize="40" FontWeight="Bold" Foreground="White">
+      <TextBlock.Text>Shadowed Text</TextBlock.Text>
+      <TextBlock.BitmapEffect>
+        <DropShadowBitmapEffect></DropShadowBitmapEffect>
+      </TextBlock.BitmapEffect>
+    </TextBlock>
+
+    <TextBlock Margin="3,0,3,13" FontSize="40" FontWeight="Bold">
+      <TextBlock.Text>Distant Shadow</TextBlock.Text>
+      <TextBlock.BitmapEffect>
+        <DropShadowBitmapEffect ShadowDepth="20" Color="LightSteelBlue" Softness="0"></DropShadowBitmapEffect>
+      </TextBlock.BitmapEffect>
+    </TextBlock>
+    <Button>
+      <Button.Content>Small Glow</Button.Content>
+      <Button.BitmapEffect>
+        <OuterGlowBitmapEffect GlowColor="LimeGreen"></OuterGlowBitmapEffect>
+      </Button.BitmapEffect>
+    </Button>
+    <Button Margin="3,20,3,10">
+      <Button.Content>Grainy Glow</Button.Content>
+      <Button.BitmapEffect>
+        <OuterGlowBitmapEffect GlowColor="LimeGreen" GlowSize="15" Noise="0.5"></OuterGlowBitmapEffect>
+      </Button.BitmapEffect>
+    </Button>
+    <TextBlock FontSize="40" FontWeight="Bold" Margin="3">
+      <TextBlock.Text>Glowing Text</TextBlock.Text>
+      <TextBlock.BitmapEffect>
+        <OuterGlowBitmapEffect GlowColor="LimeGreen"></OuterGlowBitmapEffect>
+      </TextBlock.BitmapEffect>
+    </TextBlock>
+
+
+    <TextBlock Margin="3" FontSize="40" FontWeight="Bold" Foreground="Blue">
+      <TextBlock.Text>Grainy Glow</TextBlock.Text>
+      <TextBlock.BitmapEffect>
+        <OuterGlowBitmapEffect GlowColor="LimeGreen" GlowSize="20" Noise="0.5"></OuterGlowBitmapEffect>
+      </TextBlock.BitmapEffect>
+    </TextBlock>
+
+    <theme:SystemDropShadowChrome>
+      <Button>This Button has an artifical drop shadow</Button>
+    </theme:SystemDropShadowChrome>
+    
+  </StackPanel>
+  </ScrollViewer>
+</Window>

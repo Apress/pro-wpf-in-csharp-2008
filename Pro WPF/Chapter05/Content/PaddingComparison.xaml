@@ -1,0 +1,10 @@
+﻿<Window x:Class="Content.PaddingComparison"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="PaddingComparison" Height="185" Width="239"
+    >
+  <StackPanel Margin="15" HorizontalAlignment="Center">
+    <Button>Absolutely No Padding</Button>
+    <Button Padding="3">Well Padded</Button>
+  </StackPanel>
+</Window>

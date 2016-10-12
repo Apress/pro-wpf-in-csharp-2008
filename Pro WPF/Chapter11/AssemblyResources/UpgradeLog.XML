@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="AssemblyResources">
+</Property><Property Name="Solution File" Value="D:\Code\Pro WPF\Chapter11\AssemblyResources\AssemblyResources.sln">
+</Property><Property Name="Date" Value="Tuesday, January 15, 2008">
+</Property><Property Name="Time" Value="10:55 AM">
+</Property></Properties><Event ErrorLevel="0" Project="AssemblyResources" Source="AssemblyResources.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="AssemblyResources" Source="AssemblyResources.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="AssemblyResources.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="AssemblyResources.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="AssemblyResources" Source="AssemblyResources.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>
